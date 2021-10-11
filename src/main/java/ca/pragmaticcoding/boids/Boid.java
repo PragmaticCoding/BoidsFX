@@ -1,3 +1,5 @@
+package ca.pragmaticcoding.boids;
+
 import javafx.geometry.Point2D;
 
 import java.util.Arrays;
@@ -55,6 +57,32 @@ public class Boid {
 
     public void setHistory(Point2D[] history) {
         this.history = history;
+    }
+
+    public void keepWithinBounds(int width, int height) {
+        int margin = 100;
+        int turnFactor = 1;
+
+        if (x < margin) {
+            dx += turnFactor;
+        }
+        if (x > width - margin) {
+            dx -= turnFactor;
+        }
+        if (y < margin) {
+            dy += turnFactor;
+        }
+        if (y > height - margin) {
+            dy -= turnFactor;
+        }
+    }
+
+    public void limitSpeed(double speedLimit) {
+        double speed = Math.sqrt(dx * dx + dy * dy);
+        if (speed > speedLimit) {
+            dx = (dx / speed) * speedLimit;
+            dy = (dy / speed) * speedLimit;
+        }
     }
 
     @Override
